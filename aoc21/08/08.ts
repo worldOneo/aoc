@@ -1,5 +1,4 @@
 import { readFileSync } from "fs";
-import { setFlagsFromString } from "v8";
 const input = readFileSync("./08.txt").toString().split(/[\r\n]+/gi);
 
 const segA = 1;
@@ -9,17 +8,6 @@ const segD = 8;
 const segE = 16;
 const segF = 32;
 const segG = 64;
-
-const one = segC | segF;
-const seven = one | segA;
-const four = one | segB | segD | segF;
-const nine = four | segA;
-const eight = nine | segE;
-const three = seven | segD | segG;
-const five = nine ^ segC;
-const six = eight ^ segC;
-const zero = eight ^ segD;
-const two = eight ^ segB ^ segF;
 
 const segMap: Record<string, number> = {
   a: segA,
