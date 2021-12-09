@@ -26,7 +26,6 @@ console.log("Part1: ", grid
 
 
 const addBasin = (x: number, y: number, walked: Record<string, number> = {}): number => {
-  const c = getValue(x, y);
   return [[x - 1, y], [x + 1, y], [x, y + 1], [x, y - 1]]
     .filter(([x, y]) => getIdx(x, y) != -1)
     .filter(([x, y]) => getValue(x, y) !== 9)
@@ -34,20 +33,16 @@ const addBasin = (x: number, y: number, walked: Record<string, number> = {}): nu
     .map(([x, y]) => {
       walked[`${x},${y}`] = getValue(x, y);
       return [x, y];
-    })
-    .map(([x, y]) => {
-      return 1 as number + addBasin(x, y, walked);
-    }).reduce((p, c) => p + c, 0);
+    }).map(([x, y]) => 1 + addBasin(x, y, walked))
+    .reduce((p, c) => p + c, 0);
 }
 
 const getBasinSize = (x: number, y: number, walked: Record<string, number> = {}): number => {
-  let size = 0;
   const lowValue = getLowValue(x, y);
   if (lowValue === 0)
     return 0;
   walked[`${x},${y}`] = getValue(x, y);
-  size = addBasin(x, y, walked) + 1;
-  return size;
+  return addBasin(x, y, walked) + 1;;
 }
 
 console.log("Part2: ", grid
