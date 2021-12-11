@@ -2,7 +2,8 @@ import { readFileSync } from "fs";
 const input = readFileSync("./11.txt").toString();
 const cols = input.split(/[\r\n]+/gi)[0].length;
 const rows = input.split(/[\r\n]+/gi).length;
-console.log("Rows", rows, "Cols", cols); let grid = input.split("").map(v => parseInt(v)).filter(v => !isNaN(v));
+console.log("Rows", rows, "Cols", cols);
+let grid = input.split("").map(v => parseInt(v)).filter(v => !isNaN(v));
 const copy = [...grid];
 
 const getIdx = (x: number, y: number): number =>
