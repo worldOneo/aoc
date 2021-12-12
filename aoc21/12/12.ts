@@ -1,35 +1,24 @@
 import { readFileSync } from "fs";
-import { start } from "repl";
 const input = readFileSync("./12.txt")
   .toString()
   .split(/[\r\n]+/gi)
   .map(c => c.split("-"))
   .filter(n => n.length === 2);
 
-class Cave {
-  public to: Array<string>;
-  public big: boolean;
-  constructor(to: Array<string>, big: boolean) {
-    this.to = to;
-    this.big = big;
-  }
+type Cave = {
+  to: Array<string>;
+  big: boolean;
 }
 
 const isBig = (n: string) => n == n.toUpperCase();
 
 const caves: Record<string, Cave> = {};
-input.forEach(([name, to]) => {
-  if (name in caves) {
-    caves[name].to.push(to);
-  } else {
-    caves[name] = new Cave([to], isBig(name));
-  }
-  if (to in caves && !caves[to].to.includes(name)) {
-    caves[to].to.push(name);
-  } else {
-    caves[to] = new Cave([name], isBig(to));
-  }
-});
+const pushEdge = ([name, to]: [string, string]) => (name in caves)
+  ? caves[name].to.push(to)
+  : caves[name] = { to: [to], big: isBig(name) };
+
+input.forEach(([name, to]) => pushEdge([name, to]));
+input.forEach(([name, to]) => pushEdge([to, name]))
 
 type WDir = Record<string, number>;
 
@@ -46,11 +35,10 @@ const walkCaves = (from: string = "start", walked: WDir = {}, route: string[] = 
   if (from === "end")
     return [[...route, from]];
 
-  if (p2 && !caves[from].big) {
-    walked[from] = from in walked ? 2 : 1;
-  } else {
-    walked[from] = 1;
-  }
+  walked[from] = (p2 && !caves[from].big)
+    ? (from in walked ? 2 : 1)
+    : 1;
+
   const connected = getConnectedCaves(from, walked, p2);
   if (connected.length === 0)
     return null; // Dead end
