@@ -11,3 +11,4 @@
 | 2019 | :x:                |            |
 | 2020 | in 2021            | Rust       |
 | 2021 | :heavy_check_mark: | TypeScript |
+| 2022 | :heavy_check_mark: | Haskell    |
