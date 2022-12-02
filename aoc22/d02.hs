@@ -49,7 +49,9 @@ d2p2 = sum . map ((\x -> gameScore x + moveScore (U.thrd x)) . (\(a, b) -> (to a
 
 d2 :: [(Char, Char)] -> (Int, Int)
 d2 a = do
-  let rps = map (\(op, you) -> (ord op - ord 'A', ord you - ord 'X')) a
-  ( sum (map (\(op, you) -> mod (you - op + 1) 3 * 3 + you + 1) rps),
-    sum (map (\(op, you) -> mod (you + op - 1) 3 + you * 3 + 1) rps)
+  let rps (op, you) = (ord op - ord 'A', ord you - ord 'X')
+  let s1 (op, you) = mod (you - op + 1) 3 * 3 + you + 1
+  let s2 (op, you) = mod (you + op - 1) 3 + you * 3 + 1
+  ( sum (map (s1 . rps) a),
+    sum (map (s2 . rps) a)
     )
