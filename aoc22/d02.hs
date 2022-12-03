@@ -27,8 +27,8 @@ should = U.table [(Rock, Paper), (Paper, Scissors), (Scissors, Rock)]
 loose :: Moves -> Moves
 loose = U.table [(Rock, Scissors), (Paper, Rock), (Scissors, Paper)]
 
-translate :: (Moves, Moves) -> Moves
-translate (other, selection) = U.table [(Rock, loose other), (Paper, other), (Scissors, should other)] selection
+translate :: Moves -> Moves -> Moves
+translate other = U.table [(Rock, loose other), (Paper, other), (Scissors, should other)]
 
 moveScore :: Moves -> Int
 moveScore = U.table [(Rock, 1), (Paper, 2), (Scissors, 3)]
@@ -43,7 +43,7 @@ d2p1 :: [(Char, Char)] -> Int
 d2p1 = sum . map ((\x -> gameScore x + moveScore (U.thrd x)) . (\(a, b) -> (to a, should (to a), to b)))
 
 d2p2 :: [(Char, Char)] -> Int
-d2p2 = sum . map ((\x -> gameScore x + moveScore (U.thrd x)) . (\(a, b) -> (to a, should (to a), translate (to a, to b))))
+d2p2 = sum . map ((\x -> gameScore x + moveScore (U.thrd x)) . (\(a, b) -> (to a, should (to a), translate (to a) (to b))))
 
 -- Rewritten from someone else who must suffer from a big brain:
 
