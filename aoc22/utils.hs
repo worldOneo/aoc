@@ -9,7 +9,7 @@ module Utils
     halfList,
     bimap,
     trimap,
-    triplet
+    triplet,
   )
 where
 
@@ -38,4 +38,3 @@ trimap fa fb fc (a, b, c) = (fa a, fb b, fc c)
 
 triplet :: [a] -> (a, a, a)
 triplet [d, d2, d3] = (d, d2, d3)
-
