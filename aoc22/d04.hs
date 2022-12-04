@@ -25,5 +25,4 @@ d3p1 = length . filter f . parse
     f [a, b] = a `intersect` b `elem` [a, b]
 
 d3p2 :: String -> Int
-d3p2 = do
-  length . filter (/= []) . map (foldl1 intersect) . parse
+d3p2 = length . filter (/= []) . map (foldl1 intersect) . parse
