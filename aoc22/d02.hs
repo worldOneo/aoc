@@ -3,8 +3,6 @@
 module Main (main) where
 
 import Data.Char (ord)
-import Data.List (sortBy)
-import Data.Maybe (fromMaybe)
 import Utils qualified as U
 
 main :: IO ()

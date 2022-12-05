@@ -1,3 +1,6 @@
+{-# LANGUAGE ImportQualifiedPost #-}
+{-# LANGUAGE RankNTypes #-}
+
 module Utils
   ( module Data.Either,
     module Data.Text,
@@ -10,12 +13,14 @@ module Utils
     bimap,
     trimap,
     triplet,
+    ints,
   )
 where
 
 import Data.Bifunctor (Bifunctor (bimap))
+import Data.Char (isDigit)
 import Data.Either
-import Data.List as L
+import Data.List qualified as L
 import Data.Maybe (fromMaybe)
 import Data.Text
 import Data.Text.IO
@@ -38,3 +43,14 @@ trimap fa fb fc (a, b, c) = (fa a, fb b, fc c)
 
 triplet :: [a] -> (a, a, a)
 triplet [d, d2, d3] = (d, d2, d3)
+
+_ints :: String -> String -> [Int] -> [Int]
+_ints num remain nums
+  | remain == "" && num /= "" = nums ++ [read num]
+  | remain == "" && num == "" = nums
+  | isDigit (L.head remain) = _ints (num ++ [L.head remain]) (L.tail remain) nums
+  | num /= "" = _ints "" (L.tail remain) (nums ++ [read num])
+  | otherwise = _ints num (L.tail remain) nums
+
+ints :: String -> [Int]
+ints a = _ints "" a []
