@@ -14,6 +14,8 @@ module Utils
     trimap,
     triplet,
     ints,
+    repl,
+    headOr,
   )
 where
 
@@ -44,13 +46,21 @@ trimap fa fb fc (a, b, c) = (fa a, fb b, fc c)
 triplet :: [a] -> (a, a, a)
 triplet [d, d2, d3] = (d, d2, d3)
 
-_ints :: String -> String -> [Int] -> [Int]
-_ints num remain nums
-  | remain == "" && num /= "" = nums ++ [read num]
-  | remain == "" && num == "" = nums
-  | isDigit (L.head remain) = _ints (num ++ [L.head remain]) (L.tail remain) nums
-  | num /= "" = _ints "" (L.tail remain) (nums ++ [read num])
-  | otherwise = _ints num (L.tail remain) nums
-
 ints :: String -> [Int]
 ints a = _ints "" a []
+  where
+    _ints num remain nums
+      | remain == "" && num /= "" = nums ++ [read num]
+      | remain == "" && num == "" = nums
+      | isDigit (L.head remain) = _ints (num ++ [L.head remain]) (L.tail remain) nums
+      | num /= "" = _ints "" (L.tail remain) (nums ++ [read num])
+      | otherwise = _ints num (L.tail remain) nums
+
+repl :: Int -> a -> [a] -> [a]
+repl len value list
+      | len == 0 = value : L.tail list
+      | otherwise = L.head list : repl (len - 1) value (L.tail list)
+
+headOr :: a -> [a] -> a
+headOr x [] = x
+headOr _ x = L.head x

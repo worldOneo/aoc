@@ -5,8 +5,7 @@ module Main (main) where
 import Data.Char
 import Data.List
 import Data.List.Split qualified as Split
-import Data.Set (fromList, member, splitAt)
-import Debug.Trace
+import Data.Set (fromList, member)
 import Utils qualified as U
 
 main :: IO ()
