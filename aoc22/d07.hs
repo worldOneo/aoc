@@ -26,5 +26,5 @@ parse (cmd : ins) cur dirs = do
     ["$", "cd", n] -> parse ins (cur ++ [n]) dirs
     ("$" : _) -> parse ins cur dirs
     ["dir", f] -> parse ins cur (M.insert (intercalate "/" (cur ++ [f])) [] dirs)
-    (s : _) -> parse ins cur (addToParents cur (head (read s)) dirs)
+    (s : _) -> parse ins cur (addToParents cur (read s) dirs)
     _ -> undefined
