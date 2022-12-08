@@ -1,5 +1,3 @@
-{-# LANGUAGE BangPatterns #-}
-
 import Data.Char (digitToInt)
 import Data.List (findIndex, transpose)
 import Data.Maybe
@@ -15,7 +13,7 @@ main = do
   where
     visibles mapFunc rows cols = zipWith (\y row -> zipWith (\x _ -> visible mapFunc x y rows cols) [0 ..] row) [0 ..] rows
     visible mapFunc x y rows cols =
-      let !h = (rows !! y) !! x
+      let h = (rows !! y) !! x
        in mapFunc y h (cols !! x) * mapFunc x h (rows !! y)
 
     isvisibleScore x h r = if all (< h) (take x r) || all (< h) (drop (x + 1) r) then 2 else 1
