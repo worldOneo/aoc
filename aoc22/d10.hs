@@ -1,7 +1,4 @@
-{-# LANGUAGE ImportQualifiedPost #-}
-
 import Data.List.Split (splitOn)
-import Data.Set qualified as S
 
 data Instruction = Noop | Addx Int deriving (Show)
 
@@ -18,11 +15,11 @@ main = do
       _ -> Noop : parse xs
 
 cpu :: [Instruction] -> [Int] -> (Int, String)
-cpu inst measure = run inst (S.fromList measure) 1 1 (0, "")
+cpu inst measure = run inst measure 1 1 (0, "")
   where
     run [] _ _ _ s = s
     run (i : is) m c x (s, screen) = do
-      let ns = if S.member c m then s + (c * x) else s
+      let ns = if c `elem` m then s + (c * x) else s
       let rcycle = mod c 40
       let nscreen
             | rcycle == 0 = screen ++ "\n"
