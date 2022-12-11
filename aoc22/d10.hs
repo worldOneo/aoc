@@ -11,7 +11,7 @@ main = do
   where
     parse [] = []
     parse (x : xs) = case splitOn " " x of
-      ["addx", n] -> Noop : Addx (read n :: Int) : parse xs
+      ["addx", n] -> Noop : Addx (read n) : parse xs
       _ -> Noop : parse xs
 
 cpu :: [Instruction] -> [Int] -> (Int, String)
