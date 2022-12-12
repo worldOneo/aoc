@@ -15,6 +15,7 @@ dependencies:
 - text
 - split
 - containers
+- array
 
 ghc-options:
 - -Wall
